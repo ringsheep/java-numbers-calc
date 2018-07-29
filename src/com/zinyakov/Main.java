@@ -4,9 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            BinaryArguments<Integer> arguments = new BinaryArguments.IntegerBuilder(args).build();
+            BinaryArguments arguments = new BinaryArguments.Builder(args[0], args[2], args[1]).build();
 
-            Integer result = new Calculator<Integer>().calculate(arguments, () -> {
+            Double result = new Calculator().calculate(arguments, () -> {
                 if (arguments.a > 999 || arguments.b > 999) {
                     throw new Exception("operands must not be longer than 3 digits");
                 }

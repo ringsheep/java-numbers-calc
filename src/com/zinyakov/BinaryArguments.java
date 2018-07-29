@@ -1,53 +1,71 @@
 package com.zinyakov;
 
-class BinaryArguments<OperatorType>{
+import java.util.Arrays;
+import java.util.Optional;
 
-    interface BinaryOperable<OperatorType> {
-        OperatorType operate(OperatorType a, OperatorType b);
+enum MathOperator {
+
+    PLUS("+"),
+    MINUS("-"),
+    MULTIPLY("*"),
+    DIVIDE("/");
+
+    private final String text;
+
+    MathOperator(String text) {
+        this.text = text;
     }
 
-    static class IntegerBuilder {
+    @Override
+    public String toString() {
+        return text;
+    }
 
-        private String[] args;
+}
 
-        IntegerBuilder(String[] args) {
-            this.args = args;
+class BinaryArguments {
+
+    static class Builder {
+
+        private String a;
+        private String b;
+        private String operator;
+
+        Builder(String a, String b, String operator) {
+            this.a = a;
+            this.b = b;
+            this.operator = operator;
         }
 
-        BinaryArguments<Integer> build() throws Exception {
-            Integer a = Integer.parseInt(args[0]);
-            BinaryOperable<Integer> operation = operation(args[1]);
-            Integer b = Integer.parseInt(args[2]);
-            return new BinaryArguments<>(a, b, operation);
+        BinaryArguments build() throws Exception {
+            return new BinaryArguments(Double.parseDouble(a), Double.parseDouble(b), operator(operator));
         }
 
-        BinaryOperable<Integer> operation(String operationSign) throws Exception {
-            switch (operationSign) {
-                case "+":
-                    return (a, b) -> a + b;
-                case "-":
-                    return (a, b) -> a - b;
-                case "*":
-                    return (a, b) -> a * b;
-                case "/":
-                    return (a, b) -> a / b;
+        MathOperator operator(String operationSign) throws Exception {
+            Optional<MathOperator> operator = Arrays.stream(MathOperator.values())
+                    .filter(op -> operationSign.equals(op.toString()))
+                    .findFirst();
+
+            if (operator.isPresent()) {
+                return operator.get();
             }
+
             throw new Exception("incorrect operation type. +-/* are supported");
         }
 
     }
 
-    OperatorType a;
-    OperatorType b;
-    BinaryOperable<OperatorType> operation;
+    Double a;
+    Double b;
+    MathOperator operator;
 
     private BinaryArguments() {
     }
 
-    private BinaryArguments(OperatorType a, OperatorType b, BinaryOperable<OperatorType> operation) {
+    private BinaryArguments(Double a, Double b, MathOperator operator) {
         this.a = a;
         this.b = b;
-        this.operation = operation;
+        this.operator = operator;
     }
 
 }
