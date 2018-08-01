@@ -2,13 +2,10 @@ package com.zinyakov;
 
 final class Calculator {
 
-    interface Validator {
-        void validateExpression() throws Exception;
-    }
-
-    Double calculate(BinaryArguments arguments,
-                           Validator validator) throws Exception {
-        validator.validateExpression();
+    Double calculate(BinaryArguments arguments) throws Exception {
+        if (arguments.a > 999 || arguments.b > 999) {
+            throw new Exception("operands must not be longer than 3 digits");
+        }
         switch (arguments.operator) {
             case PLUS:
                 return arguments.a + arguments.b;
