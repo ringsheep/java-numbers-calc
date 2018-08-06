@@ -1,4 +1,4 @@
-package main.java.com.zinyakov.calc;
+package com.zinyakov.calc;
 
 import java.util.Arrays;
 import java.util.Optional;

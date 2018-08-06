@@ -18,3 +18,5 @@ dependencies {
 }
 
 mainClassName = 'App'
+
+apply from: "gradle/ide.gradle"

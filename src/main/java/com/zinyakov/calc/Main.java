@@ -1,4 +1,4 @@
-package main.java.com.zinyakov.calc;
+package com.zinyakov.calc;
 
 public class Main {
 
